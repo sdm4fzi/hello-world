@@ -12,4 +12,10 @@ and then from right to left.
 If the workpiece on the line passes the light barrier, the
 line is stopped and the direction is changed after 5 seconds.
 
+## Demonstrator
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sdm4fzi/hello-world/main/images/hardware-1.png" />
+</p>
+
 ## Build pipeline
