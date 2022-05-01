@@ -20,7 +20,7 @@ REPOSITORY="$DOCKER_REGISTRY/$REPOSITORY"
 
 docker buildx build \
     --push \
-    --platform linux/amd64,linux/arm64 \
+    --platform linux/amd64,linux/arm64,linux/arm/v7 \
     --build-arg "VERSION=$VERSION" \
     --tag "$REPOSITORY:$VERSION" \
     --label "org.opencontainers.image.created=$CREATED" \
