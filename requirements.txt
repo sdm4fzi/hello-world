@@ -1,2 +1,1 @@
-RPi.GPIO==0.7.1
-pymodbus==2.5.3
+pymodbus

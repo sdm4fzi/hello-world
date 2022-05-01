@@ -8,14 +8,14 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       build-essential \
       gcc \
-    && python3 -m pip wheel --no-cache-dir --wheel-dir=/wheels -r /requirements.txt \
+    && /usr/local/bin/python -m pip install --no-cache-dir --no-index -r /requirements.txt \
     && apt-get remove -y \
       build-essential \
       gcc \
     && apt-get autoremove -y \
     && rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD ["/usr/bin/python3", "/main.py"]
+CMD ["/usr/local/bin/python", "/main.py"]
 
 LABEL "org.opencontainers.image.documentation"="https://github.com/sdm4fzi/hello-world" \
       "org.opencontainers.image.licenses"="ASL 2.0" \
