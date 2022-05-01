@@ -22,7 +22,7 @@ docker buildx build \
     --push \
     --platform linux/amd64,linux/arm64 \
     --build-arg "VERSION=$VERSION" \
-    --tag "$REPOSITORY:$REVISION" \
+    --tag "$REPOSITORY:$VERSION" \
     --label "org.opencontainers.image.created=$CREATED" \
     --label "org.opencontainers.image.revision=$REVISION" \
     --label "org.opencontainers.image.version=$VERSION" \
