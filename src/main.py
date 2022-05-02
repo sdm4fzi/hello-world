@@ -1,4 +1,6 @@
 import os
+import signal
+import sys
 import time
 
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
@@ -18,6 +20,18 @@ def stop(client):
     client.write_coil(0x00, 0, unit=0x01)
     client.write_coil(0x01, 0, unit=0x01)
 
+
+def shutdown(client):
+    stop(client)
+    close(client)
+    sys.exit(0)
+
+
+def sigterm_handler(_signo, _stack_frame):
+    shutdown(client)
+
+
+signal.signal(signal.SIGTERM, sigterm_handler)
 
 modbus_port = os.environ.get("MODBUS_PORT", "/dev/ttyAMA2")
 modbus_baudrate = int(os.environ.get("MODBUS_BAUDRATE", 19200))
@@ -56,5 +70,7 @@ try:
             time.sleep(1)
 
 except KeyboardInterrupt:
-    stop(client)
-    close(client)
+    shutdown(client)
+
+finally:
+    shutdown(client)
