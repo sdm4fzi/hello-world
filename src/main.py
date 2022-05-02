@@ -1,9 +1,12 @@
-# import RPi.GPIO as GPIO
-from pymodbus.client.sync import ModbusSerialClient as ModbusClient
-
+import os
 import time
 
-client = ModbusClient(method="rtu", port="/dev/ttyAMA2", stopbits=1, bytesize=8, parity='E', baudrate=19200)
+from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+
+modbus_port = os.environ.get("MODBUS_PORT", "/dev/ttyAMA2")
+modbus_baudrate = int(os.environ.get("MODBUS_BAUDRATE", 19200))
+
+client = ModbusClient(method="rtu", port=modbus_port, stopbits=1, bytesize=8, parity='E', baudrate=modbus_baudrate)
 connection = client.connect()
 
 # stop
