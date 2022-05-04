@@ -29,4 +29,21 @@ sudo podman pull ghcr.io/sdm4fzi/hello-world:latest
 sudo podman run --privileged -it ghcr.io/sdm4fzi/hello-world:latest
 ```
 
+## Necessary configurations on the RPi CM4 modules
+
+On all nodes:
+
+Append ``cgroup_enable=memory cgroup_memory=1`` at the end of the kernel command
+line in ``/boot/cmdline.txt``.
+
+On the plc1 node:
+
+Add the following lines to the ``/boot/config.txt`` file:
+
+```
+# https://www.waveshare.com/wiki/Compute_Module_4_PoE_Board_(B)
+dtoverlay=uart3
+dtoverlay=uart5
+```
+
 ## Build pipeline
