@@ -48,26 +48,30 @@ if result1.bits[0] or result2.bits[0]:
 
 try:
     while True:
-        result = client.read_discrete_inputs(0x00, count=1, unit=0x02)  # left
-        if not result.bits[0]:
-            client.write_coil(0x00, 0, unit=0x01)
-            client.write_coil(0x01, 0, unit=0x01)
+        result = client.read_discrete_inputs(0x00, count=1, unit=0x01)
+        if result.bits[0]:
+            result = client.read_discrete_inputs(0x00, count=1, unit=0x02)  # left
+            if not result.bits[0]:
+                client.write_coil(0x00, 0, unit=0x01)
+                client.write_coil(0x01, 0, unit=0x01)
 
-            time.sleep(5)
-            client.write_coil(0x00, 0, unit=0x01)  # right
-            client.write_coil(0x01, 1, unit=0x01)  # left
-            time.sleep(1)
+                time.sleep(5)
+                client.write_coil(0x00, 0, unit=0x01)  # right
+                client.write_coil(0x01, 1, unit=0x01)  # left
+                time.sleep(1)
 
-        result = client.read_discrete_inputs(0x01, count=1, unit=0x02)  # right
-        if not result.bits[0]:
+            result = client.read_discrete_inputs(0x01, count=1, unit=0x02)  # right
+            if not result.bits[0]:
 
-            client.write_coil(0x00, 0, unit=0x01)
-            client.write_coil(0x01, 0, unit=0x01)
+                client.write_coil(0x00, 0, unit=0x01)
+                client.write_coil(0x01, 0, unit=0x01)
 
-            time.sleep(5)
-            client.write_coil(0x00, 1, unit=0x01)  # right
-            client.write_coil(0x01, 0, unit=0x01)  # left
-            time.sleep(1)
+                time.sleep(5)
+                client.write_coil(0x00, 1, unit=0x01)  # right
+                client.write_coil(0x01, 0, unit=0x01)  # left
+                time.sleep(1)
+        else:
+            stop(client)
 
 except KeyboardInterrupt:
     shutdown(client)
