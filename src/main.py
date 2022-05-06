@@ -1,3 +1,4 @@
+import logging
 import os
 import signal
 import sys
@@ -6,28 +7,36 @@ import time
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
+
+
 def connect(modbus_port="/dev/ttyAMA2", modbus_baudrate=19200):
+    logging.info(f"Connect modbus: {modbus_port}, {modbus_baudrate}")
     client = ModbusClient(method="rtu", port=modbus_port, stopbits=1, bytesize=8, parity='E', baudrate=modbus_baudrate)
     client.connect()
     return client
 
 
 def close(client):
+    logging.info("Disconnect modbus")
     client.close()
 
 
 def stop(client):
+    logging.info("Stop")
     client.write_coil(0x00, 0, unit=0x01)
     client.write_coil(0x01, 0, unit=0x01)
 
 
 def shutdown(client):
+    logging.info("Shutdown")
     stop(client)
     close(client)
     sys.exit(0)
 
 
 def sigterm_handler(_signo, _stack_frame):
+    logging.info("SIGTERM")
     shutdown(client)
 
 

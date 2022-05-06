@@ -41,4 +41,4 @@ jobs:
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
           REPOSITORY: sdm4fzi/hello-world
-          VERSION: ${{ steps.datetime.outputs.datetime }}
+          VERSION: v${{ steps.datetime.outputs.datetime }}
